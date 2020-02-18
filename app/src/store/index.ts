@@ -1,11 +1,11 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { ReverciDataI } from "@/store/modules/reverci";
+import { ReversiDataI } from "@/store/modules/reversi";
 
 Vue.use(Vuex);
 
 export interface RootStateI {
-  reverci: ReverciDataI;
+  reverci: ReversiDataI;
 }
 
 const store = new Vuex.Store<RootStateI>({});

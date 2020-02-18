@@ -6,18 +6,27 @@
 import { Component, Vue, Prop } from "vue-property-decorator";
 @Component
 export default class Stone extends Vue {
-  @Prop() private type!: number;
+  @Prop() private color!: number;
 
   get stone(): string {
-    if (this.type === 0) {
-      return "&nbsp;";
-    } else if (this.type === 1) {
-      return "&#x26AB";
-    } else if (this.type === 2) {
-      return "&#x26AA";
+    if (this.color === 0) {
+      return "&nbsp;"; // none
+    } else if (this.color === 1) {
+      return "&#x26AB"; // black
+    } else if (this.color === 2) {
+      return "&#x26AA"; // white
     } else {
-      return "other";
+      return "&#x1f914;"; // :thinking_face:
     }
   }
 }
 </script>
+
+<style scoped>
+span {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+</style>

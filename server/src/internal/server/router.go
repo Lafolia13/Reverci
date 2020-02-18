@@ -18,9 +18,9 @@ func NewRouter() *mux.Router {
   router := mux.NewRouter().StrictSlash(true)
   router.
     Methods("POST").
-    Path("/").
+    Path("/userRequest").
     Name("Test").
-    HandlerFunc(TestHandler)
+    HandlerFunc(UserRequestHandler)
 
   return router
 }
