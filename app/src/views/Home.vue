@@ -1,16 +1,16 @@
 <template>
   <div class="home">
-    <PlayArea />
+    <Reversi />
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
-import PlayArea from "@/components/PlayArea.vue";
+import Reversi from "@/components/Reversi.vue";
 
 @Component({
   components: {
-    PlayArea
+    Reversi
   }
 })
 export default class Home extends Vue {}

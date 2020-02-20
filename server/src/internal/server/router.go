@@ -19,8 +19,14 @@ func NewRouter() *mux.Router {
   router.
     Methods("POST").
     Path("/userRequest").
-    Name("Test").
+    Name("User").
     HandlerFunc(UserRequestHandler)
+  
+  router.
+    Methods("POST").
+    Path("/skip").
+    Name("Skip").
+    HandlerFunc(SkipTurnHandler)
 
   return router
 }

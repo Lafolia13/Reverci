@@ -11,9 +11,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
 import Stone from "@/components/Stone.vue";
-import { reversiModule, PositionI } from "../store/modules/reversi";
+import { reversiDataModule, PointI } from "../store/modules/reversiData";
 
 @Component({
   components: {
@@ -23,27 +23,35 @@ import { reversiModule, PositionI } from "../store/modules/reversi";
 export default class PlayArea extends Vue {
   get stoneColor() {
     return (h: number, w: number) => {
-      const stonePos: PositionI = {
+      const stonePos: PointI = {
         h: h,
         w: w
       };
-      return reversiModule.getStone(stonePos);
+      return reversiDataModule.getStone(stonePos);
     };
   }
 
+  get status(): string {
+    return reversiDataModule.status;
+  }
+
   putStone(h: number, w: number) {
-    const stonePos: PositionI = {
+    const stonePos: PointI = {
       h: h,
       w: w
     };
-    reversiModule.send(stonePos);
+    reversiDataModule.send(stonePos);
   }
 }
 </script>
 
 <style scoped>
+div {
+  overflow: auto;
+}
 table {
   border-collapse: collapse;
+  table-layout: fixed;
 }
 td {
   border: 3px solid #000000;

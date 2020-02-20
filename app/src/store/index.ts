@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { ReversiDataI } from "@/store/modules/reversi";
+import { ReversiDataI } from "@/store/modules/reversiData";
 
 Vue.use(Vuex);
 

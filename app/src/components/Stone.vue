@@ -10,7 +10,7 @@ export default class Stone extends Vue {
 
   get stone(): string {
     if (this.color === 0) {
-      return "&nbsp;"; // none
+      return "&#x3000"; // none
     } else if (this.color === 1) {
       return "&#x26AB"; // black
     } else if (this.color === 2) {
