@@ -1,8 +1,8 @@
 <template>
   <div class="playArea">
     <table align="center">
-      <tr v-for="h in 8" :key="'h:' + h">
-        <td v-for="w in 8" :key="'w:' + w" @click="putStone(h - 1, w - 1)">
+      <tr v-for="h in width" :key="'h:' + h">
+        <td v-for="w in width" :key="'w:' + w" @click="putStone(h - 1, w - 1)">
           <Stone :color="stoneColor(h - 1, w - 1)" />
         </td>
       </tr>
@@ -21,6 +21,10 @@ import { reversiDataModule, PointI } from "../store/modules/reversiData";
   }
 })
 export default class PlayArea extends Vue {
+  get width(): number {
+    return reversiDataModule.field.length;
+  }
+
   get stoneColor() {
     return (h: number, w: number) => {
       const stonePos: PointI = {
@@ -57,7 +61,7 @@ td {
   border: 3px solid #000000;
   background: #42b983;
   width: 50px;
-  height: 50px;
+  height: width;
   font-size: 30px;
   text-align: center;
   vertical-align: middle;

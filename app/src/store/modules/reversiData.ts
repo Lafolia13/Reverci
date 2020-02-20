@@ -26,7 +26,7 @@ export interface ReversiDataI {
   status: string;
 }
 
-@Module({ dynamic: true, store: store, name: "reversi", namespaced: true })
+@Module({ dynamic: true, store: store, name: "reversiData", namespaced: true })
 class ReversiData extends VuexModule {
   turn = 0;
   score: ScoresI = {
