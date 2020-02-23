@@ -7,6 +7,7 @@ import {
 } from "vuex-module-decorators";
 import axios from "axios";
 import store from "../index";
+import { gameDataModule } from "@/store/modules/gameData";
 
 export interface PointI {
   h: number;
@@ -28,6 +29,7 @@ export interface ReversiDataI {
 
 @Module({ dynamic: true, store: store, name: "reversiData", namespaced: true })
 class ReversiData extends VuexModule {
+  sendIP = "http://192.168.1.22:8888/";
   turn = 0;
   score: ScoresI = {
     black: 2,
@@ -48,6 +50,7 @@ class ReversiData extends VuexModule {
     w: 0
   };
   status = "none";
+  putOK = false;
 
   @Mutation
   update(next: ReversiDataI) {
@@ -57,8 +60,18 @@ class ReversiData extends VuexModule {
     this.status = next.status;
   }
 
+  @Mutation
+  updateStatus(status: string) {
+    this.status = status;
+  }
+
+  @Mutation
+  updatePutOK(status: boolean) {
+    this.putOK = status;
+  }
+
   @Action({})
-  async updateAction(updateData: ReversiDataI) {
+  async set(updateData: ReversiDataI) {
     try {
       await this.update(updateData);
     } catch (err) {
@@ -69,23 +82,36 @@ class ReversiData extends VuexModule {
       new Promise(resolve => setTimeout(resolve, msec));
 
     if (this.status === "skip") {
-      await sleep(2000);
+      await sleep(1500);
       this.skip();
+    } else if (this.status !== "finish") {
+      if (this.turn % 2 == 0 && gameDataModule.black !== "manual") {
+        this.updatePutOK(false);
+        await this.cpu(gameDataModule.black);
+      } else if (this.turn % 2 == 1 && gameDataModule.white !== "manual") {
+        this.updatePutOK(false);
+        await this.cpu(gameDataModule.white);
+      } else {
+        this.updatePutOK(true);
+      }
     }
   }
 
   @Action({})
-  async send(stonePos: PointI) {
+  async cpu(solver: string) {
+    this.updateStatus("cpu");
     try {
-      const sendIP = "http://192.168.1.22:8888/userRequest";
       const sendData: ReversiDataI = {
         turn: this.turn,
         score: this.score,
         field: this.field,
-        request: stonePos,
-        status: this.status
+        request: { h: 0, w: 0 },
+        status: solver
       };
-      const res = await axios.post(sendIP, JSON.stringify(sendData));
+      const res = await axios.post(
+        this.sendIP + "cpuRequest",
+        JSON.stringify(sendData)
+      );
       const retData: ReversiDataI = {
         turn: res.data.turn,
         score: res.data.score,
@@ -93,7 +119,34 @@ class ReversiData extends VuexModule {
         request: res.data.request,
         status: res.data.status
       };
-      this.updateAction(retData);
+      this.set(retData);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  @Action({})
+  async send(stonePos: PointI) {
+    try {
+      const sendData: ReversiDataI = {
+        turn: this.turn,
+        score: this.score,
+        field: this.field,
+        request: stonePos,
+        status: this.status
+      };
+      const res = await axios.post(
+        this.sendIP + "userRequest",
+        JSON.stringify(sendData)
+      );
+      const retData: ReversiDataI = {
+        turn: res.data.turn,
+        score: res.data.score,
+        field: res.data.field,
+        request: res.data.request,
+        status: res.data.status
+      };
+      this.set(retData);
     } catch (err) {
       console.log(err);
     }
@@ -102,7 +155,6 @@ class ReversiData extends VuexModule {
   @Action({})
   async skip() {
     try {
-      const sendIP = "http://192.168.1.22:8888/skip";
       const sendData: ReversiDataI = {
         turn: this.turn,
         score: this.score,
@@ -110,7 +162,10 @@ class ReversiData extends VuexModule {
         request: { h: -1, w: -1 },
         status: this.status
       };
-      const res = await axios.post(sendIP, JSON.stringify(sendData));
+      const res = await axios.post(
+        this.sendIP + "skip",
+        JSON.stringify(sendData)
+      );
       const retData: ReversiDataI = {
         turn: res.data.turn,
         score: res.data.score,
@@ -118,7 +173,7 @@ class ReversiData extends VuexModule {
         request: res.data.request,
         status: res.data.status
       };
-      this.updateAction(retData);
+      this.set(retData);
     } catch (err) {
       console.log(err);
     }

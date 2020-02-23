@@ -28,5 +28,17 @@ func NewRouter() *mux.Router {
     Name("Skip").
     HandlerFunc(SkipTurnHandler)
 
+  router.
+    Methods("POST").
+    Path("/solverRequest").
+    Name("Solvers").
+    HandlerFunc(SolversHandler)
+
+  router.
+    Methods("POST").
+    Path("/cpuRequest").
+    Name("CPU").
+    HandlerFunc(CPUHandler)
+
   return router
 }

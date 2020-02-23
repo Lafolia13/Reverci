@@ -17,3 +17,7 @@ type GameData struct {
   Request Point  `json:"request"`
   Status  string    `json:"status"`
 }
+
+type Solvers struct {
+  Solver []string `json:"solver"`
+}

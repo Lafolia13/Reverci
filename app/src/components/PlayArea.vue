@@ -40,6 +40,7 @@ export default class PlayArea extends Vue {
   }
 
   putStone(h: number, w: number) {
+    if (reversiDataModule.putOK == false) return;
     const stonePos: PointI = {
       h: h,
       w: w
@@ -51,18 +52,19 @@ export default class PlayArea extends Vue {
 
 <style scoped>
 div {
-  overflow: auto;
+  margin-bottom: 200px;
 }
 table {
+  overflow: auto;
   border-collapse: collapse;
   table-layout: fixed;
+  word-break: break-all;
 }
 td {
   border: 3px solid #000000;
   background: #42b983;
-  width: 50px;
-  height: width;
-  font-size: 30px;
+  width: 2em;
+  height: 2em;
   text-align: center;
   vertical-align: middle;
 }

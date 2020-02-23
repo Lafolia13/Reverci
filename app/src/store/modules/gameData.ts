@@ -7,10 +7,11 @@ import {
 } from "vuex-module-decorators";
 import store from "../index";
 import { ReversiDataI, reversiDataModule } from "@/store/modules/reversiData";
+import axios from "axios";
 
-export interface SolversI {
-  solver: string[];
-}
+// export interface SolversI {
+//   solver: string[];
+// }
 
 export interface GameDataI {
   width: number;
@@ -20,10 +21,11 @@ export interface GameDataI {
 
 @Module({ dynamic: true, store: store, name: "gameData", namespaced: true })
 class GameData extends VuexModule {
+  sendIP = "http://192.168.1.22:8888/";
   width = 8;
   black = "manual";
   white = "manual";
-  solver: string[] = ["manual", "a", "b", "c"];
+  solver: string[] = ["manual"];
 
   @Mutation
   updateSolvers(solver: string[]) {
@@ -84,12 +86,17 @@ class GameData extends VuexModule {
     retData.field[this.width / 2][this.width / 2 - 2] = 3;
     retData.field[this.width / 2 + 1][this.width / 2 - 1] = 3;
 
-    await reversiDataModule.updateAction(retData);
+    await reversiDataModule.set(retData);
   }
 
   @Action({})
   async getSolver() {
-    this.updateSolvers(["asd", "asdfaf", "manual", "test"]);
+    try {
+      const res = await axios.post(this.sendIP + "solverRequest");
+      this.updateSolvers(res.data.solver);
+    } catch (err) {
+      console.log(err);
+    }
   }
 }
 

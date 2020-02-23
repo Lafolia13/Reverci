@@ -25,19 +25,15 @@ func JsonToGameData(w http.ResponseWriter, r *http.Request) (gameData request.Ga
   bytes := make([]byte, length)
   length, err = r.Body.Read(bytes)
   if err != nil && err != io.EOF {
-    w.WriteHeader(http.StatusInternalServerError)
     fmt.Println(err)
 		return
   }
 	
 	// request.GameData にエンコーディング
   if err := json.Unmarshal(bytes, &gameData); err != nil {
-    w.WriteHeader(http.StatusInternalServerError)
     fmt.Println(err)
 		return
 	}
-
-	w.WriteHeader(http.StatusOK)
 
 	correct = true
 	return

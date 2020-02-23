@@ -50,9 +50,9 @@ export default class Reversi extends Vue {
 
 <style scoped>
 table {
-  width: 400px;
+  width: 90%;
 }
 td {
-  width: calc(100% / 3);
+  width: calc(90% / 3);
 }
 </style>

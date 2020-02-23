@@ -18,10 +18,9 @@
       <tr>
         <td>
           <select v-model="width">
-            <option value="4">4</option>
-            <option value="6">6</option>
-            <option value="8">8</option>
-            <option value="10">10</option>
+            <option v-for="x in 9" :value="2 + 2 * x" :key="'width: ' + x">
+              {{ 2 + 2 * x }}
+            </option>
           </select>
         </td>
         <td>
@@ -37,9 +36,6 @@
               solver
             }}</option>
           </select>
-        </td>
-        <td>
-          <button @click="getSolver">Get solver</button>
         </td>
       </tr>
     </table>
@@ -71,8 +67,9 @@ export default class Home extends Vue {
     gameDataModule.reset();
   }
 
-  getSolver() {
+  created() {
     gameDataModule.getSolver();
+    gameDataModule.reset();
   }
 
   @Watch("width")
@@ -94,9 +91,7 @@ export default class Home extends Vue {
 
 <style scoped>
 table {
-  width: 400px;
+  width: 95%;
+  table-layout: fixed;
 }
-/* td {
-  width: calc(100% / 3);
-} */
 </style>
