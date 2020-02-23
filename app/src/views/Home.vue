@@ -18,7 +18,7 @@
       <tr>
         <td>
           <select v-model="width">
-            <option v-for="x in 9" :value="2 + 2 * x" :key="'width: ' + x">
+            <option v-for="x in 5" :value="2 + 2 * x" :key="'width: ' + x">
               {{ 2 + 2 * x }}
             </option>
           </select>
