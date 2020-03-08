@@ -35,6 +35,7 @@ func JsonToGameData(w http.ResponseWriter, r *http.Request) (gameData request.Ga
 		return
 	}
 
-	correct = true
+	correct = len(gameData.Field) <= 20
+
 	return
 }

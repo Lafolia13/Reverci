@@ -5,13 +5,9 @@ import {
   Action,
   getModule
 } from "vuex-module-decorators";
+import axios from "axios";
 import store from "../index";
 import { ReversiDataI, reversiDataModule } from "@/store/modules/reversiData";
-import axios from "axios";
-
-// export interface SolversI {
-//   solver: string[];
-// }
 
 export interface GameDataI {
   width: number;
@@ -21,7 +17,7 @@ export interface GameDataI {
 
 @Module({ dynamic: true, store: store, name: "gameData", namespaced: true })
 class GameData extends VuexModule {
-  sendIP = "http://192.168.1.22:8888/";
+  sendIP = "http://localhost:8888/";
   width = 8;
   black = "manual";
   white = "manual";
@@ -71,6 +67,7 @@ class GameData extends VuexModule {
       request: { h: 0, w: 0 },
       status: "start"
     };
+    // 初期盤面は固定なので front 側で初期化
     for (let h = 0; h < this.width; h++) {
       retData.field[h] = Array<number>(this.width);
       for (let w = 0; w < this.width; w++) {

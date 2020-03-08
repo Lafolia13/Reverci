@@ -23,6 +23,7 @@ export default class Stone extends Vue {
 </script>
 
 <style scoped>
+/* 文字を選択できないようにする */
 span {
   user-select: none;
   -moz-user-select: none;

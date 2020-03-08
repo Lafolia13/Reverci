@@ -33,15 +33,19 @@ export default class Reversi extends Vue {
   get turn(): number {
     return reversiDataModule.turn;
   }
+
   get color(): number {
     return (reversiDataModule.turn % 2) + 1;
   }
+
   get blackScore(): number {
     return reversiDataModule.score.black;
   }
+
   get whiteScore(): number {
     return reversiDataModule.score.white;
   }
+
   get status(): string {
     return reversiDataModule.status;
   }

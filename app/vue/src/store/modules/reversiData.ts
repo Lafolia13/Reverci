@@ -29,7 +29,7 @@ export interface ReversiDataI {
 
 @Module({ dynamic: true, store: store, name: "reversiData", namespaced: true })
 class ReversiData extends VuexModule {
-  sendIP = "http://192.168.1.22:8888/";
+  sendIP = "http://localhost:8888/";
   turn = 0;
   score: ScoresI = {
     black: 2,
@@ -72,17 +72,12 @@ class ReversiData extends VuexModule {
 
   @Action({})
   async set(updateData: ReversiDataI) {
-    try {
-      await this.update(updateData);
-    } catch (err) {
-      console.log(err);
-    }
-
     const sleep = (msec: number) =>
       new Promise(resolve => setTimeout(resolve, msec));
 
+    await this.update(updateData);
     if (this.status === "skip") {
-      await sleep(1500);
+      await sleep(1000);
       this.skip();
     } else if (this.status !== "finish") {
       if (this.turn % 2 == 0 && gameDataModule.black !== "manual") {

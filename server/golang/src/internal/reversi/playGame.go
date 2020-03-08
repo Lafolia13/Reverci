@@ -82,23 +82,6 @@ func TurnOver(now request.Point, start request.Point,
   }
 }
 
-      
-func Max(a int, b int) int {
-  if (a > b) {
-    return a
-  } else {
-    return b
-  }	
-}	
-            
-func Abs(a int) int {
-  if (a > 0) {
-    return a
-  } else {
-    return -a
-  }	
-}
-
 func CanPutPoints(player_color int, gameData *request.GameData) bool {
   ok := false
   width := len(gameData.Field)
@@ -148,3 +131,18 @@ func CanPutPoint(now request.Point, player_color int,
   }
 }
 
+func Max(a int, b int) int {
+  if (a > b) {
+    return a
+  } else {
+    return b
+  }	
+}
+
+func Abs(a int) int {
+  if (a > 0) {
+    return a
+  } else {
+    return -a
+  }
+}
