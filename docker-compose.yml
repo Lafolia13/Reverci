@@ -2,25 +2,20 @@ version: "3"
 
 services:
   server:
-    image: golang:latest
-    container_name: server
+    build: ./server/
+    image: reversi_server
+    container_name: reversi_server
     tty: true
-    volumes:
-      - ./server:/server
-      - ./solvers:/solvers
-    working_dir: /server
     ports:
       - 8888:8888
     environment:
       - GOPATH=/server
-    command: [/bin/bash] # TODO
+
   app:
-    image: vue
-    container_name: app
+    build: ./app/
+    image: reversi_app
+    container_name: reversi_app
     tty: true
-    volumes:
-      - ./app:/app
     working_dir: /app
     ports:
       - 80:8080
-    # command: [/bin/bash] # TODO
