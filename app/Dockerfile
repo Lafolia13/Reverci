@@ -1,8 +1,7 @@
 FROM node:latest
 COPY vue /app/
 WORKDIR /app/
-RUN yarn global add @vue/cli && \
-  yarn install
+RUN yarn install
 
 CMD ["yarn", "serve"]
   
