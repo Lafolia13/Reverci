@@ -1,17 +1,29 @@
 <template>
-  <div class="reversi">
-    <table align="center">
-      <tr>
-        <td>Turn {{ turn }}: <Stone :color="color" /></td>
-      </tr>
-      <tr>
-        <td><Stone :color="1" />: {{ blackScore }}</td>
-        <td><Stone :color="2" />: {{ whiteScore }}</td>
-        <td>
-          <span> Status: {{ status }} </span>
-        </td>
-      </tr>
-    </table>
+  <div class="container">
+    <div class="row">
+      <div class="col-6">
+        <div class="text-center">
+          Turn {{ turn }} :
+          <Stone width="16px" height="16px" :color="color" />
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="text-center">Status: {{ status }}</div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        <div class="text-center">
+          <Stone width="16px" height="16px" :color="1" />: {{ blackScore }}
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="text-center">
+          <Stone width="16px" height="16px" :color="2" />: {{ whiteScore }}
+        </div>
+      </div>
+    </div>
 
     <PlayArea />
   </div>
@@ -51,12 +63,3 @@ export default class Reversi extends Vue {
   }
 }
 </script>
-
-<style scoped>
-table {
-  width: 90%;
-}
-td {
-  width: calc(90% / 3);
-}
-</style>

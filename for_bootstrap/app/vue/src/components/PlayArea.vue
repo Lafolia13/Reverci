@@ -1,9 +1,17 @@
 <template>
   <div class="playArea">
-    <table align="center">
+    <table class="table mx-auto mb-5" ref="table-reversi">
       <tr v-for="h in width" :key="'h:' + h">
-        <td v-for="w in width" :key="'w:' + w" @click="putStone(h - 1, w - 1)">
-          <Stone :color="stoneColor(h - 1, w - 1)" />
+        <td
+          class="bg-success border border-dark align-middle p-0"
+          height="0px"
+          v-for="w in width"
+          :key="'w:' + w"
+          @click="putStone(h - 1, w - 1)"
+        >
+          <div class="text-center">
+            <Stone :color="stoneColor(h - 1, w - 1)" />
+          </div>
         </td>
       </tr>
     </table>
@@ -11,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 import Stone from "@/components/Stone.vue";
 import { reversiDataModule, PointI } from "../store/modules/reversiData";
 
@@ -49,23 +57,3 @@ export default class PlayArea extends Vue {
   }
 }
 </script>
-
-<style scoped>
-div {
-  margin-bottom: 200px;
-}
-table {
-  overflow: auto;
-  border-collapse: collapse;
-  table-layout: fixed;
-  word-break: break-all;
-}
-td {
-  border: 3px solid #000000;
-  background: #42b983;
-  width: 2em;
-  height: 2em;
-  text-align: center;
-  vertical-align: middle;
-}
-</style>

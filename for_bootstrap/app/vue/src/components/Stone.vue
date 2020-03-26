@@ -1,5 +1,5 @@
 <template>
-  <span v-html="stone"></span>
+  <img width="100%" height="100%" :src="stone" />
 </template>
 
 <script lang="ts">
@@ -8,15 +8,15 @@ import { Component, Vue, Prop } from "vue-property-decorator";
 export default class Stone extends Vue {
   @Prop() private color!: number;
 
-  get stone(): string {
+  get stone(): any {
     if (this.color === 0) {
-      return "&#x3000"; // none
+      return require("../assets/images/none.png");
     } else if (this.color === 1) {
-      return "&#x26AB"; // black
+      return require("@/assets/images/black.png");
     } else if (this.color === 2) {
-      return "&#x26AA"; // white
+      return require("@/assets/images/white.png");
     } else {
-      return "&#x1f914;"; // :thinking_face:
+      return require("@/assets/images/able.png");
     }
   }
 }
@@ -24,7 +24,7 @@ export default class Stone extends Vue {
 
 <style scoped>
 /* 文字を選択できないようにする */
-span {
+img {
   user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;

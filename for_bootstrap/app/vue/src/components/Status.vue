@@ -1,45 +1,44 @@
 <template>
   <div class="status">
-    <table align="center">
-      <tr>
-        <td>
-          Width:
-        </td>
-        <td>
-          Black:
-        </td>
-        <td>
-          White:
-        </td>
-        <td>
-          <button @click="reset">Reset</button>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <select v-model="width">
-            <!-- 4 <= x <= 12 -->
+    <div class="container pt-4">
+      <div class="form-row">
+        <div class="form-group col-6">
+          <label class="col-5 col-form-label" for="black">Black:</label>
+          <select class="custom-select col-7" id="black" v-model="black">
+            <option v-for="solver in solvers" :value="solver" :key="solver">
+              {{ solver }}
+            </option>
+          </select>
+        </div>
+        <div class="form-group col-6">
+          <label class="col-5 col-form-label" for="white">White:</label>
+          <select class="custom-select col-7" id="white" v-model="white">
+            <option v-for="solver in solvers" :value="solver" :key="solver">
+              {{ solver }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-6">
+          <label class="col-5 col-form-label" for="width">Width:</label>
+          <select class="custom-select col-7" id="width" v-model="width">
             <option v-for="x in 5" :value="2 + 2 * x" :key="'width: ' + x">
               {{ 2 + 2 * x }}
             </option>
           </select>
-        </td>
-        <td>
-          <select v-model="black">
-            <option v-for="solver in solvers" :value="solver" :key="solver">{{
-              solver
-            }}</option>
-          </select>
-        </td>
-        <td>
-          <select v-model="white">
-            <option v-for="solver in solvers" :value="solver" :key="solver">{{
-              solver
-            }}</option>
-          </select>
-        </td>
-      </tr>
-    </table>
+        </div>
+
+        <div class="col">
+          <div class="text-center">
+            <button class="btn btn-light border" @click="reset">
+              Reset
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -83,10 +82,3 @@ export default class Status extends Vue {
   }
 }
 </script>
-
-<style scoped>
-table {
-  width: 95%;
-  table-layout: fixed;
-}
-</style>
